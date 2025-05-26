@@ -1,42 +1,72 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+h1,
+h2 {
+  color: #333;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.contents {
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.inputArea {
+  position: relative;
+}
+.inputArea img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  z-index: -1;
+}
+.aquarium {
+  position: relative;
+  border: 2px solid;
+  border-radius: 20px;
+  margin-top: 20px;
+  top: 20%;
+  left: 5%;
+  height: 900px;
+  width: 90%;
+
+  background: linear-gradient(
+      to bottom,
+      rgba(10, 20, 60, 0.9),
+      rgba(0, 128, 255, 0.5),
+      rgba(0, 64, 128, 0.4)
+    ),
+    url("assets/aquarium.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.fish {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  animation: slide 10s infinite;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+@keyframes slide{
+  0% {transform: translate(0,0);}
+  12.5%{transform: translate(60px,100px);}
+  25%{transform: translate(50px,50px);}
+  50% {transform: translate(-100px,900px);}
+  75%{transform: translate(50px,-75px);}
+  100% {transform: translate(0,0);}
+} 
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+.last{
+  background-color: rgba(255, 255, 255, 0.432);
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

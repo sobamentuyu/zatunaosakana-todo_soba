@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import TodoList from './components/Todolist'
+import { useState } from 'react'
+import {v4 as uuidv4} from 'uuid';
 
-function App() {
-  const [count, setCount] = useState(0)
+function App(){
+  //タスク状態の管理
+  const [todos,setTodos] = useState([
+    //{id: 1, name: 'todo1', completed:false}
+  ])
 
-  return (
+  const [inputValue, setInputValue] = useState('')
+// エンターで追加
+  const [isComposing, setIsComposing] = useState(false)
+
+  const handleInputValue = (e) =>{
+    setInputValue(e.target.value)
+  }
+
+  //task追加
+  const handleAddTodo = () =>{
+    if(inputValue === '')return
+    setTodos((prevTodos)=>{
+      return[...prevTodos,{id:uuidv4(), name:inputValue, completed:false}]
+    })
+    setInputValue('')
+  }
+// エンターで追加
+  const handlekeyDown = (event) => {
+    if (event.key === 'Enter' && !isComposing) {
+      handleAddTodo()
+    }
+  }
+
+  //todo追加
+  const todoCompleted = (id) =>{
+    const newTodos = [...todos]
+    const checkedTodo = newTodos.find((newTodo)=> newTodo.id === id)
+    checkedTodo.completed = !checkedTodo.completed
+    setTodos(newTodos)
+  }
+
+  //todo削除
+  const handleClear=()=>{
+    setTodos(todos.filter(todo=> !todo.completed))
+  }
+  return(
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='contents'>
+      <p className='last'>残りのおさかな：{todos.filter(todo => !todo.completed).length} </p>
+        <div className='inputArea'>
+          <input
+          className='inputArea'
+          value={inputValue}
+          onChange={handleInputValue}
+          // エンターで追加
+          onKeyDown={handlekeyDown} 
+          onCompositionEnd={() => setIsComposing(false)}
+        />
+        <img src='src\assets\ナンヨウハギモドキ.png'/>
+        </div>
+      <button onClick={handleAddTodo}>おさかなをふやす 🐟➕</button>
+      <button onClick={handleClear}>おさかなをたべる 🐟🍽️</button>
+      <div className='aquarium'>
+        <div className='fish'>
+          <TodoList todos={todos} todoCompleted={todoCompleted} />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      
+    </div>
     </>
   )
 }
-
-export default App
+export default App;
